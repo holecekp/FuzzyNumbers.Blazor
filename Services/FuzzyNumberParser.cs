@@ -10,7 +10,7 @@ public class FuzzyNumberParser : IFuzzyNumberParser
 
     public CultureInfo Culture { get; set; } = CultureInfo.InvariantCulture;
 
-    public bool TryPare(string input, out FuzzyNumber? fuzzyNumber)
+    public bool TryParse(string input, out FuzzyNumber? fuzzyNumber)
     {
         fuzzyNumber = null;
 

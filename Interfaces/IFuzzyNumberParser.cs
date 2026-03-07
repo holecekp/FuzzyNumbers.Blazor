@@ -7,5 +7,5 @@ public interface IFuzzyNumberParser
 {
     char BreakPointsSeparators { get; set; }
     CultureInfo Culture { get; set; }
-    bool TryPare(string input, out FuzzyNumber? fuzzyNumber);
+    bool TryParse(string input, out FuzzyNumber? fuzzyNumber);
 }

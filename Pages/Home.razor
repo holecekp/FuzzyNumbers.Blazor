@@ -1,7 +1,38 @@
 ﻿@page "/"
+@using Holecek.FuzzyMath.FuzzyNumbers
+@using FuzzyNumbers.Blazor.Interfaces
 
 <PageTitle>Fuzzy numbers arithmetic</PageTitle>
 
 <h1>Fuzzy numbers arithmetic</h1>
 
+<input type="text" @bind="FuzzyNumberString" />
+<button @onclick="TestFuzzyNumerParsingAndFormatting">
+    Parse
+</button>
+
+@message
+
+@code {
+    @inject IFuzzyNumberParser _fuzzyNumberParser
+    @inject IFuzzyNumberFormatter _fuzzyNumberFormatter
+
+    string FuzzyNumberString { get; set; } = "1, 2, 3";
+    string message = "";
+
+    public async Task TestFuzzyNumerParsingAndFormatting()
+    {
+        bool isValid = _fuzzyNumberParser.TryParse(FuzzyNumberString, out FuzzyNumber? parsedFuzzyNumber);
+
+        if (isValid)
+        {
+            string formattedFuzzyNumber = _fuzzyNumberFormatter.Format(parsedFuzzyNumber);
+            message = $"The entered fuzzy number is {formattedFuzzyNumber}.";
+        }
+        else
+        {
+            message = $"The entered fuzzy number is not valid.";
+        }
+    }
+}
 
