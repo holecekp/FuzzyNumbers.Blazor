@@ -25,14 +25,12 @@
 
     public async Task TestFuzzyNumerParsingAndFormatting()
     {
-        bool isValid = _fuzzyNumberParser.TryParse(FuzzyNumberString, out FuzzyNumber? parsedFuzzyNumber);
-
-        if (isValid)
+        if (_fuzzyNumberParser.TryParse(FuzzyNumberString, out FuzzyNumber? parsedFuzzyNumber))
         {
             string formattedFuzzyNumber = _fuzzyNumberFormatter.Format(parsedFuzzyNumber);
             
             var pointsList = _fuzzyNumberToGraphPointsConverter
-                .Convert(parsedFuzzyNumber!)
+                .Convert(parsedFuzzyNumber)
                 .Select(point => $"({point.X}, {point.Y})");
 
             string points = string.Join(", ", pointsList);

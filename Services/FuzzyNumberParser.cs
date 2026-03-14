@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Holecek.FuzzyMath.FuzzyNumbers;
 using FuzzyNumbers.Blazor.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FuzzyNumbers.Blazor.Services;
 
@@ -10,12 +11,11 @@ public class FuzzyNumberParser : IFuzzyNumberParser
 
     public CultureInfo Culture { get; set; } = CultureInfo.InvariantCulture;
 
-    public bool TryParse(string input, out FuzzyNumber? fuzzyNumber)
+    public bool TryParse(string input, [NotNullWhen(true)] out FuzzyNumber? fuzzyNumber)
     {
-        fuzzyNumber = null;
-
         if (string.IsNullOrEmpty(input))
         {
+            fuzzyNumber = default;
             return false;
         }
 
@@ -32,6 +32,7 @@ public class FuzzyNumberParser : IFuzzyNumberParser
         }
         catch
         {
+            fuzzyNumber = default;
             return false;
         }
     }
