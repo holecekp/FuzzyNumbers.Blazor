@@ -11,11 +11,14 @@
     Parse
 </button>
 
-@message
+<p>
+    @message
+</p>
 
 @code {
     @inject IFuzzyNumberParser _fuzzyNumberParser
     @inject IFuzzyNumberFormatter _fuzzyNumberFormatter
+    @inject IFuzzyNumberToGraphPointsConverter _fuzzyNumberToGraphPointsConverter
 
     string FuzzyNumberString { get; set; } = "1, 2, 3";
     string message = "";
@@ -27,7 +30,14 @@
         if (isValid)
         {
             string formattedFuzzyNumber = _fuzzyNumberFormatter.Format(parsedFuzzyNumber);
-            message = $"The entered fuzzy number is {formattedFuzzyNumber}.";
+            
+            var pointsList = _fuzzyNumberToGraphPointsConverter
+                .Convert(parsedFuzzyNumber!)
+                .Select(point => $"({point.X}, {point.Y})");
+
+            string points = string.Join(", ", pointsList);
+
+            message = $"The entered fuzzy number is {formattedFuzzyNumber}. Points for drawing in a graph: {points}.";
         }
         else
         {
