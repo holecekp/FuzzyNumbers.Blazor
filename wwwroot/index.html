@@ -14,6 +14,7 @@
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
     <script type="importmap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -32,6 +33,66 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
-</body>
 
+    <script>
+        var chart;
+
+        window.updateGraphData = function(dataset)
+        {
+            chart.config.data.datasets[0].data = dataset;
+            chart.update();
+        }
+
+        window.drawGraph = function(dataset)
+        {
+            const ctx = document.getElementById('fuzzyGraph');        
+            var config = {
+                type: 'line',
+                data: {
+                        datasets: [
+                        {
+                            label: 'A',
+                            data: dataset,
+                            pointStyle: false,
+                            borderColor: 'rgb(229, 57, 53)',
+                            borderWidth: 1,
+                            fill: true,
+                            backgroundColor: 'rgba(255, 200, 200, 0.3)'
+                        },
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Fuzzy numbers drawing demo'
+                        },
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            type: 'linear',
+                            title: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 10
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 1
+                        }
+                    }
+                }
+            }
+
+            chart = new Chart(ctx, config);
+        }
+    </script>
+</body>
 </html>
