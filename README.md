@@ -1,1 +1,4 @@
-# FuzzyNumbers.Blazor
+# A sample project demostrating the usage of FuzzyMath library
+[FuzzyMath](https://github.com/holecekp/FuzzyMath) is a free open-source library for .NET. This repository contains a very simple project that demonstrates its usage in practice. The site contains just a single page that let the user enter a fuzzy number in a text box. The entered input is then parsed and validated. The resulting fuzzy number is visualized in a form of a graph The drawing itself is performed by [Chart.js](https://www.chartjs.org/) JavaScript library. However, it could be simply replaced by any other drawing library of your choice.
+
+This sample isn't focused on calculations with fuzzy numbers themselves. Instead, it focuses on parsing the input from the user and on the visual presentations of the results. Both of them are essential for using the calculation with fuzzy numbers in practice.
