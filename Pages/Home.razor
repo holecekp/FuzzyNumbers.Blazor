@@ -1,15 +1,28 @@
 ﻿@page "/"
+@using FuzzyNumbers.Blazor.Controls
 @using Holecek.FuzzyMath.FuzzyNumbers
 @using FuzzyNumbers.Blazor.Interfaces
+@using System.ComponentModel.DataAnnotations
 
 <PageTitle>Fuzzy numbers arithmetic</PageTitle>
 
-<h1>Fuzzy numbers parsing and drawing demo</h1>
+<h1 style="color: #333; font-size: 2.5rem; margin-bottom: 24px; font-weight: 600; letter-spacing: -0.5px;">Fuzzy numbers parsing and drawing demo</h1>
 
-A = <input type="text" @bind="FuzzyNumberString" />
-<button @onclick="TestFuzzyNumerParsingAndFormatting">
-    Update
-</button>
+<EditForm Model="Model" OnValidSubmit="RecalculateResult" FormName="FuzzyNumberForm">
+    <DataAnnotationsValidator />
+
+    <div style="background-color: #f5f5f5; border: 1px solid #999; border-radius: 8px; padding: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <label>
+            A = <InputFuzzyNumber @bind-Value="Model.EditedFuzzyNumber" />
+        </label>
+        
+        <p>
+            <ValidationMessage For="@(() => Model.EditedFuzzyNumber)" />
+        </p>
+
+        <button type="submit">Update graph</button>
+    </div>
+</EditForm>
 
 <p>
     @message
@@ -33,7 +46,10 @@ A = <input type="text" @bind="FuzzyNumberString" />
     @inject IFuzzyNumberFormatter _fuzzyNumberFormatter
     @inject IFuzzyNumberToGraphPointsConverter _fuzzyNumberToGraphPointsConverter
 
-    string FuzzyNumberString { get; set; } = "1, 2, 3";
+
+    [SupplyParameterFromForm]
+    FuzzyNumberForm Model { get; set;}= new();
+
     string message = "";
     bool graphInitialized = false;
 
@@ -41,35 +57,35 @@ A = <input type="text" @bind="FuzzyNumberString" />
     {
         if (firstRender)
         {
-            await TestFuzzyNumerParsingAndFormatting();
+            await RecalculateResult();
         }
 
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    public async Task TestFuzzyNumerParsingAndFormatting()
+    public async Task RecalculateResult()
     {
-        if (_fuzzyNumberParser.TryParse(FuzzyNumberString, out FuzzyNumber? parsedFuzzyNumber))
+        string formattedFuzzyNumber = _fuzzyNumberFormatter.Format(Model.EditedFuzzyNumber);           
+        var points = _fuzzyNumberToGraphPointsConverter.Convert(Model.EditedFuzzyNumber);
+
+        message = $"The entered fuzzy number is {formattedFuzzyNumber}.";
+
+        if (!graphInitialized)
         {
-            string formattedFuzzyNumber = _fuzzyNumberFormatter.Format(parsedFuzzyNumber);           
-            var points = _fuzzyNumberToGraphPointsConverter.Convert(parsedFuzzyNumber);
-
-            message = $"The entered fuzzy number is {formattedFuzzyNumber}.";
-            StateHasChanged();
-
-            if (!graphInitialized)
-            {
-                await _jsRuntime.InvokeVoidAsync("window.drawGraph", points);
-                graphInitialized = true;
-            }
-            else
-            {
-                await _jsRuntime.InvokeVoidAsync("window.updateGraphData", points);
-            }
+            await _jsRuntime.InvokeVoidAsync("window.drawGraph", points);
+            graphInitialized = true;
         }
         else
         {
-            message = $"The entered fuzzy number is not valid.";
+            await _jsRuntime.InvokeVoidAsync("window.updateGraphData", points);
         }
+
+        StateHasChanged();
+    }
+
+    public class FuzzyNumberForm
+    {
+        [Required]
+        public FuzzyNumber EditedFuzzyNumber { get; set; } = new FuzzyNumber(1, 2, 3);
     }
 }
