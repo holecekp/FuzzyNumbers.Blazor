@@ -1,12 +1,17 @@
 ﻿@page "/"
-@using FuzzyNumbers.Blazor.Controls
+@using System.ComponentModel.DataAnnotations 
 @using Holecek.FuzzyMath.FuzzyNumbers
+@using FuzzyNumbers.Blazor.Controls
 @using FuzzyNumbers.Blazor.Interfaces
-@using System.ComponentModel.DataAnnotations
 
 <PageTitle>Fuzzy numbers arithmetic</PageTitle>
 
-<h1 style="color: #333; font-size: 2.5rem; margin-bottom: 24px; font-weight: 600; letter-spacing: -0.5px;">Fuzzy numbers parsing and drawing demo</h1>
+<h1 style="color: #333; font-size: 2.5rem; margin-bottom: 24px; font-weight: 600; letter-spacing: -0.5px;">Fuzzy numbers demo</h1>
+<p>
+    This sample page demonstrates the usage of an open-source FuzzyMath library by Pavel Holeček on a simple example of adding two fuzzy numbers.
+    Beside the calculation itself, it parses the fuzzy numbers from user input and display the results in a graph. See the links at the bottom
+    of the page for the source code.
+</p>
 
 <EditForm Model="Model" OnValidSubmit="RecalculateResult" FormName="FuzzyNumberForm">
     <DataAnnotationsValidator />
@@ -30,7 +35,7 @@
             <ValidationMessage For="@(() => Model.SecondFuzzyNumber)" />
         </p>
 
-        <button type="submit">Update graph</button>
+        <button type="submit">Calculate A+B and update the graph</button>
     </div>
 </EditForm>
 
@@ -81,17 +86,20 @@
         string formattedSecondFuzzyNumber = _fuzzyNumberFormatter.Format(Model.SecondFuzzyNumber);
         var secondFuzzyNumberPoints = _fuzzyNumberToGraphPointsConverter.Convert(Model.SecondFuzzyNumber);
 
+        const int alphaCutsCount = 100;
+        FuzzyNumber result = FuzzyNumberArithmetic.Add(Model.FirstFuzzyNumber, Model.SecondFuzzyNumber, alphaCutsCount);
+        var resultPoints = _fuzzyNumberToGraphPointsConverter.Convert(result);
 
-        message = $"The entered fuzzy numbers are ({formattedFirstFuzzyNumber}) and ({formattedSecondFuzzyNumber}).";
+        message = $"The sum of the entered fuzzy numbers ({formattedFirstFuzzyNumber}) + ({formattedSecondFuzzyNumber}):";
 
         if (!graphInitialized)
         {
-            await _jsRuntime.InvokeVoidAsync("window.drawGraph", firstFuzzyNumberPoints, secondFuzzyNumberPoints);
+            await _jsRuntime.InvokeVoidAsync("window.drawGraph", firstFuzzyNumberPoints, secondFuzzyNumberPoints, resultPoints);
             graphInitialized = true;
         }
         else
         {
-            await _jsRuntime.InvokeVoidAsync("window.updateGraphData", firstFuzzyNumberPoints, secondFuzzyNumberPoints);
+            await _jsRuntime.InvokeVoidAsync("window.updateGraphData", firstFuzzyNumberPoints, secondFuzzyNumberPoints, resultPoints);
         }
 
         StateHasChanged();

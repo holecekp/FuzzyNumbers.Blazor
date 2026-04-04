@@ -37,14 +37,15 @@
     <script>
         var chart;
 
-        window.updateGraphData = function(datasetA, datasetB)
+        window.updateGraphData = function (datasetA, datasetB, datasetResult)
         {
             chart.config.data.datasets[0].data = datasetA;
             chart.config.data.datasets[1].data = datasetB;
+            chart.config.data.datasets[2].data = datasetResult;
             chart.update();
         }
 
-        window.drawGraph = function (datasetA, datasetB)
+        window.drawGraph = function (datasetA, datasetB, datasetResult)
         {
             const ctx = document.getElementById('fuzzyGraph');        
             var config = {
@@ -69,7 +70,15 @@
                             fill: true,
                             backgroundColor: 'rgba(200, 200, 255, 0.3)'
                         },
-
+                        {
+                            label: 'A+B',
+                            data: datasetResult,
+                            pointStyle: false,
+                            borderColor: 'rgb(53, 229, 57)',
+                            borderWidth: 1,
+                            fill: true,
+                            backgroundColor: 'rgba(200, 255, 200, 0.3)'
+                        },
                     ]
                 },
                 options: {
