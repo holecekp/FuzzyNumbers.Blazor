@@ -12,12 +12,22 @@
     <DataAnnotationsValidator />
 
     <div style="background-color: #f5f5f5; border: 1px solid #999; border-radius: 8px; padding: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <label>
-            A = <InputFuzzyNumber @bind-Value="Model.EditedFuzzyNumber" />
-        </label>
-        
         <p>
-            <ValidationMessage For="@(() => Model.EditedFuzzyNumber)" />
+            <label>
+                A = <InputFuzzyNumber @bind-Value="Model.FirstFuzzyNumber" />
+            </label>
+        </p>
+        <p>
+            <ValidationMessage For="@(() => Model.FirstFuzzyNumber)" />
+        </p>
+
+        <p>
+            <label>
+                B = <InputFuzzyNumber @bind-Value="Model.SecondFuzzyNumber" />
+            </label>
+        </p>
+        <p>
+            <ValidationMessage For="@(() => Model.SecondFuzzyNumber)" />
         </p>
 
         <button type="submit">Update graph</button>
@@ -65,19 +75,23 @@
 
     public async Task RecalculateResult()
     {
-        string formattedFuzzyNumber = _fuzzyNumberFormatter.Format(Model.EditedFuzzyNumber);           
-        var points = _fuzzyNumberToGraphPointsConverter.Convert(Model.EditedFuzzyNumber);
+        string formattedFirstFuzzyNumber = _fuzzyNumberFormatter.Format(Model.FirstFuzzyNumber);
+        var firstFuzzyNumberPoints = _fuzzyNumberToGraphPointsConverter.Convert(Model.FirstFuzzyNumber);
 
-        message = $"The entered fuzzy number is {formattedFuzzyNumber}.";
+        string formattedSecondFuzzyNumber = _fuzzyNumberFormatter.Format(Model.SecondFuzzyNumber);
+        var secondFuzzyNumberPoints = _fuzzyNumberToGraphPointsConverter.Convert(Model.SecondFuzzyNumber);
+
+
+        message = $"The entered fuzzy numbers are ({formattedFirstFuzzyNumber}) and ({formattedSecondFuzzyNumber}).";
 
         if (!graphInitialized)
         {
-            await _jsRuntime.InvokeVoidAsync("window.drawGraph", points);
+            await _jsRuntime.InvokeVoidAsync("window.drawGraph", firstFuzzyNumberPoints, secondFuzzyNumberPoints);
             graphInitialized = true;
         }
         else
         {
-            await _jsRuntime.InvokeVoidAsync("window.updateGraphData", points);
+            await _jsRuntime.InvokeVoidAsync("window.updateGraphData", firstFuzzyNumberPoints, secondFuzzyNumberPoints);
         }
 
         StateHasChanged();
@@ -86,6 +100,9 @@
     public class FuzzyNumberForm
     {
         [Required]
-        public FuzzyNumber EditedFuzzyNumber { get; set; } = new FuzzyNumber(1, 2, 3);
+        public FuzzyNumber FirstFuzzyNumber { get; set; } = new FuzzyNumber(1, 2, 3);
+
+        [Required]
+        public FuzzyNumber SecondFuzzyNumber { get; set; } = new FuzzyNumber(2, 3, 4, 5);
     }
 }
