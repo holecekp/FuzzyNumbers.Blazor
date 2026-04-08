@@ -3,8 +3,10 @@
 
 This sample isn't focused just on **calculations with fuzzy numbers** themselves. It focuses on **parsing the input from the user** and on the **visual presentations of the results**. Both of them are essential for using calculations with fuzzy numbers in practice.
 
-# Check it out
-You can try this demo live at [fuzzymath.holecekp.eu](https://fuzzymath.holecekp.eu)
+# See it in action
+You can try the application live at: [fuzzymath.holecekp.eu](https://fuzzymath.holecekp.eu)
+
+<img width="400" alt="Screenshot of the site where this project is running" src="https://github.com/user-attachments/assets/66025605-3aad-4f3a-a8c5-e102f5b05f07" />
 
 # Parsing fuzzy numbers form text, or formatting them as a text
 The `Services` folder contains `FuzzyNumberParser` class that parses a fuzzy number from a string. The particular implementation expects a list of break points separated by a comma. The breakpoints uses a period
