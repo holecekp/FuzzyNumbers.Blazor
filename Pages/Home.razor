@@ -36,7 +36,7 @@
             <ValidationMessage For="@(() => Model.SecondFuzzyNumber)" />
         </p>
 
-        <button type="submit">Calculate A+B and update the graph</button>
+        <button type="submit">Calculate @Model.ArithmeticOperationFormula and update the graph</button>
     </div>
 </EditForm>
 
@@ -87,11 +87,20 @@
         string formattedSecondFuzzyNumber = _fuzzyNumberFormatter.Format(Model.SecondFuzzyNumber);
         var secondFuzzyNumberPoints = _fuzzyNumberToGraphPointsConverter.Convert(Model.SecondFuzzyNumber);
 
+        Func<FuzzyNumber, FuzzyNumber, int, FuzzyNumber> arithmeticOperationFunc = Model.ArithmeticOperation switch
+        {
+            ArithmeticOperation.Addition => FuzzyNumberArithmetic.Add,
+            ArithmeticOperation.Subtraction => FuzzyNumberArithmetic.Subtract,
+            ArithmeticOperation.Multiplication => FuzzyNumberArithmetic.Multiply,
+            ArithmeticOperation.Division => FuzzyNumberArithmetic.Divide,
+            _ => throw new InvalidOperationException("Unsupported arithmetic operation")
+        };
+
         const int alphaCutsCount = 100;
-        FuzzyNumber result = FuzzyNumberArithmetic.Add(Model.FirstFuzzyNumber, Model.SecondFuzzyNumber, alphaCutsCount);
+        FuzzyNumber result = arithmeticOperationFunc(Model.FirstFuzzyNumber, Model.SecondFuzzyNumber, alphaCutsCount);
         var resultPoints = _fuzzyNumberToGraphPointsConverter.Convert(result);
 
-        message = $"The sum of the entered fuzzy numbers ({formattedFirstFuzzyNumber}) + ({formattedSecondFuzzyNumber}):";
+        message = $"The result for the entered fuzzy numbers ({formattedFirstFuzzyNumber}) {Model.ArithmeticOperationSign} ({formattedSecondFuzzyNumber}):";
 
         if (!graphInitialized)
         {
