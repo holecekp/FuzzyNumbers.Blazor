@@ -3,6 +3,7 @@
 @using Holecek.FuzzyMath.FuzzyNumbers
 @using FuzzyNumbers.Blazor.Controls
 @using FuzzyNumbers.Blazor.Interfaces
+@using FuzzyNumbers.Blazor.Models
 
 <PageTitle>Fuzzy numbers arithmetic</PageTitle>
 
@@ -63,7 +64,7 @@
 
 
     [SupplyParameterFromForm]
-    FuzzyNumberForm Model { get; set;}= new();
+    FuzzyArithmeticsFormModel Model { get; set;}= new();
 
     string message = "";
     bool graphInitialized = false;
@@ -103,14 +104,5 @@
         }
 
         StateHasChanged();
-    }
-
-    public class FuzzyNumberForm
-    {
-        [Required]
-        public FuzzyNumber FirstFuzzyNumber { get; set; } = new FuzzyNumber(1, 2, 3);
-
-        [Required]
-        public FuzzyNumber SecondFuzzyNumber { get; set; } = new FuzzyNumber(2, 3, 4, 5);
     }
 }
