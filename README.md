@@ -1,5 +1,6 @@
 #  Blazor WebAssembly project demonstrating the usage of FuzzyMath library
-[FuzzyMath](https://github.com/holecekp/FuzzyMath) is a free open-source library for .NET. This repository contains a simple project that demonstrates its usage in practice. The site contains a single page that let the user enter two fuzzy number in text boxes. The entered fuzzy numbers are then parsed and validated, its sum is calculated and visualized in a form of a graph The drawing itself is performed by [Chart.js](https://www.chartjs.org/) JavaScript library. However, it could be simply replaced by any other drawing library of your choice.
+[FuzzyMath](https://github.com/holecekp/FuzzyMath) is a free open-source library for .NET. This repository contains a simple project that demonstrates its usage in practice. The site consists of a single page that let the user enter two fuzzy number in text boxes and select one of the arithmetic operations (addition, subtraction, multiplication, division).
+The entered fuzzy numbers are then parsed and validated, the operations is applied on them, and the result is visualized in form of a graph The drawing itself is performed by [Chart.js](https://www.chartjs.org/) JavaScript library. However, it could be simply replaced by any other drawing library of your choice.
 
 This sample isn't focused just on **calculations with fuzzy numbers** themselves. It focuses on **parsing the input from the user** and on the **visual presentations of the results**. Both of them are essential for using calculations with fuzzy numbers in practice.
 
@@ -39,7 +40,7 @@ The beahvior and usage is the same as for the standard Blazor `InputNumber`, `In
 The component uses `IFuzzyNumberParser` and `IFuzzyNumberFormatter` registered in DI. Register a different implementation if you expect the users to enter fuzzy numbers in a different format.
 
 # Presentation of the results in the form of a graph
-When the user click on a button, the sum of the entered fuzzy numbers is calculated, and both the inputs and the resulting fuzzy number are drawn in a graph.
+When the user click on a button, the result of the selected arithmetic operation is calculated, and both the inputs and the resulting fuzzy numbers are drawn in a graph.
 
 To achieve this, `FuzzyNumberToGraphPointsConverter` class in the `Services` folder converts a fuzzy number to a list of points that needs to be drawn. This can be then easily performed
 by a graph drawing library of your choice. This site uses [Chart.js](https://www.chartjs.org/) JavaScript library. However, swapping to a different library should be an easy task.

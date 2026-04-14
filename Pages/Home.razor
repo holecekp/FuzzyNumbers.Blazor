@@ -5,13 +5,14 @@
 @using FuzzyNumbers.Blazor.Interfaces
 @using FuzzyNumbers.Blazor.Models
 
-<PageTitle>Fuzzy numbers arithmetic</PageTitle>
+<PageTitle>Arithmetic operations on fuzzy numbers</PageTitle>
 
-<h1 style="color: #333; font-size: 2.5rem; margin-bottom: 24px; font-weight: 600; letter-spacing: -0.5px;">Fuzzy numbers demo</h1>
+<h1 style="color: #333; font-size: 2.5rem; margin-bottom: 24px; font-weight: 600; letter-spacing: -0.5px;">
+    Arithmetic operations on fuzzy numbers
+</h1>
 <p>
-    This sample page demonstrates the usage of an open-source FuzzyMath library by Pavel Holeček on a simple example of adding two fuzzy numbers.
-    Beside the calculation itself, it parses the fuzzy numbers from user input and display the results in a graph. See the links at the bottom
-    of the page for the source code.
+    This page performs arithmetic operations on two fuzzy numbers using the open-source FuzzyMath library by Pavel Holeček.
+    For more information, see the links at the bottom of the page for the source code of this site and the FuzzyMath library.
 </p>
 
 <EditForm Model="Model" OnValidSubmit="RecalculateResult" FormName="FuzzyNumberForm">
@@ -36,7 +37,19 @@
             <ValidationMessage For="@(() => Model.SecondFuzzyNumber)" />
         </p>
 
-        <button type="submit">Calculate @Model.ArithmeticOperationFormula and update the graph</button>
+        <p>
+            <label>
+                Operation:
+                <InputSelect @bind-Value="Model.ArithmeticOperation">
+                    <option value="@(nameof(ArithmeticOperation.Addition))">Addition A+B</option>
+                    <option value="@(nameof(ArithmeticOperation.Subtraction))">Subtraction A-B</option>
+                    <option value="@(nameof(ArithmeticOperation.Multiplication))">Multiplication A⋅B</option>
+                    <option value="@(nameof(ArithmeticOperation.Division))">Division A/B</option>
+                </InputSelect>
+            </label>
+        </p>
+
+        <button type="submit">Calculate the result and update the graph</button>
     </div>
 </EditForm>
 
@@ -51,9 +64,9 @@
 <hr />
 
 <p>
-    The <a href="https://github.com/holecekp/FuzzyNumbers.Blazor">source code for this page</a> is available on GitHub. The page demonstrate the usage
-    of a free <a href="https://github.com/holecekp/FuzzyMath">open-source library FuzzyMath</a> by Pavel Holeček. You can get the library
-    as a <a href="https://www.nuget.org/packages/Holecek.FuzzyMath">NuGet package</a>, so that you can use it in your .NET projects.
+    The <a href="https://github.com/holecekp/FuzzyNumbers.Blazor">source code for this page</a> is available on GitHub.
+    It demonstrates how to use the free, open-source <a href="https://github.com/holecekp/FuzzyMath">FuzzyMath library</a> by Pavel Holeček.
+    The library is available as a <a href="https://www.nuget.org/packages/Holecek.FuzzyMath">NuGet package</a> for use in your .NET projects.
 </p>
 
 @code {
@@ -102,14 +115,26 @@
 
         message = $"The result for the entered fuzzy numbers ({formattedFirstFuzzyNumber}) {Model.ArithmeticOperationSign} ({formattedSecondFuzzyNumber}):";
 
+        string resultLabel = Model.ArithmeticOperationFormula;
         if (!graphInitialized)
         {
-            await _jsRuntime.InvokeVoidAsync("window.drawGraph", firstFuzzyNumberPoints, secondFuzzyNumberPoints, resultPoints);
+            await _jsRuntime.InvokeVoidAsync(
+                "window.drawGraph",
+                firstFuzzyNumberPoints,
+                secondFuzzyNumberPoints,
+                resultPoints,
+                resultLabel);
+
             graphInitialized = true;
         }
         else
         {
-            await _jsRuntime.InvokeVoidAsync("window.updateGraphData", firstFuzzyNumberPoints, secondFuzzyNumberPoints, resultPoints);
+            await _jsRuntime.InvokeVoidAsync(
+                "window.updateGraphData",
+                firstFuzzyNumberPoints,
+                secondFuzzyNumberPoints,
+                resultPoints,
+                resultLabel);
         }
 
         StateHasChanged();
