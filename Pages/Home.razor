@@ -7,67 +7,85 @@
 
 <PageTitle>Arithmetic operations on fuzzy numbers</PageTitle>
 
-<h1 style="color: #333; font-size: 2.5rem; margin-bottom: 24px; font-weight: 600; letter-spacing: -0.5px;">
-    Arithmetic operations on fuzzy numbers
-</h1>
-<p>
-    This page performs arithmetic operations on two fuzzy numbers using the open-source FuzzyMath library by Pavel Holeček.
-    For more information, see the links at the bottom of the page for the source code of this site and the FuzzyMath library.
-</p>
-
-<EditForm Model="Model" OnValidSubmit="RecalculateResult" FormName="FuzzyNumberForm">
-    <DataAnnotationsValidator />
-
-    <div style="background-color: #f5f5f5; border: 1px solid #999; border-radius: 8px; padding: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <p>
-            <label>
-                A = <InputFuzzyNumber @bind-Value="Model.FirstFuzzyNumber" />
-            </label>
-        </p>
-        <p>
-            <ValidationMessage For="@(() => Model.FirstFuzzyNumber)" />
-        </p>
-
-        <p>
-            <label>
-                B = <InputFuzzyNumber @bind-Value="Model.SecondFuzzyNumber" />
-            </label>
-        </p>
-        <p>
-            <ValidationMessage For="@(() => Model.SecondFuzzyNumber)" />
-        </p>
-
-        <p>
-            <label>
-                Operation:
-                <InputSelect @bind-Value="Model.ArithmeticOperation">
-                    <option value="@(nameof(ArithmeticOperation.Addition))">Addition A+B</option>
-                    <option value="@(nameof(ArithmeticOperation.Subtraction))">Subtraction A-B</option>
-                    <option value="@(nameof(ArithmeticOperation.Multiplication))">Multiplication A⋅B</option>
-                    <option value="@(nameof(ArithmeticOperation.Division))">Division A/B</option>
-                </InputSelect>
-            </label>
-        </p>
-
-        <button type="submit">Calculate the result and update the graph</button>
+<header>
+    <h1>Arithmetic operations on fuzzy numbers</h1>
+    <div class="header-icons">
+        <a href="https://github.com/holecekp/FuzzyNumbers.Blazor" title="Source code for this page on GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.nuget.org/packages/Holecek.FuzzyMath" title="Download NuGet for the FuzzyMath library to use it in your .NET projects"><i class="fas fa-box"></i></a>
     </div>
-</EditForm>
+</header>
 
-<p>
-    @message
-</p>
+<main>
+    <div class="card">
 
-<div style="width: 800px;">
-    <canvas id="fuzzyGraph"></canvas>
-</div>
+        <!-- LEFT: FORM -->
+        <div class="card-left">
+            <h2>Enter Fuzzy Numbers</h2>
 
-<hr />
+            <EditForm Model="Model" OnValidSubmit="RecalculateResult" FormName="FuzzyNumberForm">
+                <DataAnnotationsValidator />
 
-<p>
-    The <a href="https://github.com/holecekp/FuzzyNumbers.Blazor">source code for this page</a> is available on GitHub.
-    It demonstrates how to use the free, open-source <a href="https://github.com/holecekp/FuzzyMath">FuzzyMath library</a> by Pavel Holeček.
-    The library is available as a <a href="https://www.nuget.org/packages/Holecek.FuzzyMath">NuGet package</a> for use in your .NET projects.
-</p>
+                <div class="form-group">
+                    <label for="fuzzyNumberA">Fuzzy number A</label>
+                    <InputFuzzyNumber id="fuzzyNumberA" @bind-Value="Model.FirstFuzzyNumber" />
+                </div>
+                <ValidationMessage For="@(() => Model.FirstFuzzyNumber)" />
+
+
+                <div class="form-group">
+                    <label for="fuzzyNumberB">Fuzzy number B</label>
+                    <InputFuzzyNumber id="fuzzyNumberB" @bind-Value="Model.SecondFuzzyNumber" />
+                </div>
+                <ValidationMessage For="@(() => Model.SecondFuzzyNumber)" />
+
+                <div class="form-group">
+                    <label for="operation">Operation</label>
+                    <InputSelect id="operation" @bind-Value="Model.ArithmeticOperation">
+                        <option value="@(nameof(ArithmeticOperation.Addition))">Addition A+B</option>
+                        <option value="@(nameof(ArithmeticOperation.Subtraction))">Subtraction A-B</option>
+                        <option value="@(nameof(ArithmeticOperation.Multiplication))">Multiplication A⋅B</option>
+                        <option value="@(nameof(ArithmeticOperation.Division))">Division A/B</option>
+                    </InputSelect>
+                </div>
+
+                <button type="submit">Calculate the result and update the graph</button>
+            </EditForm>
+        </div>
+
+        <!-- RIGHT: INFO -->
+        <div class="card-right">
+            <h3>How to use</h3>
+
+            <p>
+                This page performs arithmetic operations on two fuzzy numbers using the open-source FuzzyMath library by Pavel Holeček.
+                For more information, see the links at the bottom of the page for the source code of this site and the FuzzyMath library.
+            </p>
+
+        </div>
+    </div>
+
+    @* <p>
+        @message
+    </p> *@
+
+    <div class="graph">
+        <canvas id="fuzzyGraph"></canvas>
+    </div>
+
+</main>
+
+
+<footer>
+    <p>
+        The <a href="https://github.com/holecekp/FuzzyNumbers.Blazor">source code for this page</a> is available on GitHub.
+        It demonstrates how to use the free, open-source <a href="https://github.com/holecekp/FuzzyMath">FuzzyMath library</a> by Pavel Holeček.
+        The library is available as a <a href="https://www.nuget.org/packages/Holecek.FuzzyMath">NuGet package</a> for use in your .NET projects.
+    </p>
+
+    <p>
+        © 2026 Pavel Holeček
+    </p>
+</footer>
 
 @code {
     @inject IJSRuntime _jsRuntime

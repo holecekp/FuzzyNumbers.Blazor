@@ -1,0 +1,240 @@
+:root {
+    --primary: #4a90e2;
+    --bg1: #eef2f7;
+    --bg2: #dfe6ef;
+    --text: #2f2f2f;
+    --gray: #7a7a7a;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(180deg, #ffffff, #f3f6fa);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.header-icons a {
+    margin-left: 15px;
+    color: var(--gray);
+    font-size: 18px;
+    transition: all 0.2s ease;
+}
+
+.header-icons a:hover {
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
+/* MAIN */
+main {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+/* FORM CARD */
+.card {
+    display: flex;
+    border-radius: 14px;
+    overflow: hidden; /* ensures both sides share rounded corners */
+
+    background: linear-gradient(145deg, #ffffff, #f4f7fb);
+
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.12),
+        0 2px 6px rgba(0,0,0,0.06);
+
+    margin-bottom: 50px;
+}
+
+.card h2 {
+    margin-bottom: 18px;
+    font-size: 18px;
+}
+
+
+/* LEFT SIDE (FORM) */
+.card-left {
+    flex: 1;
+    padding: 28px;
+}
+
+/* RIGHT SIDE (INFO PANEL) */
+.card-right {
+    position: relative;
+    flex: 1;
+    padding: 28px;
+
+    background: linear-gradient(160deg, #4a90e2, #357ab8);
+    color: #eef4ff;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border-left: 1px solid rgba(0,0,0,0.08);
+
+    overflow: hidden; /* ensures overlay stays inside */
+}
+
+/* subtle pattern overlay */
+.card-right::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    /* stronger, readable pattern */
+    background-image:
+        radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(255,255,255,0.06) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.06) 75%, transparent 75%, transparent);
+
+    background-size:
+        26px 26px,
+        52px 52px;
+
+    opacity: 0.42;
+    pointer-events: none;
+}
+
+.card-right h3 {
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.card-right p {
+    margin-bottom: 1em;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+label {
+    width: 140px; /* fixed label width */
+    font-size: 14px;
+    color: var(--gray);
+}
+
+input, textarea {
+    width: 180px; /* shorter inputs */
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #d6dbe3;
+    background: #ffffff;
+    outline: none;
+    transition: all 0.2s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(74,144,226,0.15);
+}
+
+select {
+    width: 180px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #d6dbe3;
+    background: #ffffff;
+    outline: none;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(74,144,226,0.15);
+}
+
+button {
+    margin-top: 12px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #5aa0f2, #3d7edb);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* GRAPH */
+.graph {
+    height: 350px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #e9edf3, #f8fafc);
+    box-shadow: 
+        inset 0 2px 6px rgba(0,0,0,0.05),
+        0 10px 25px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+/* FOOTER */
+footer {
+    background: #2c3137;
+    color: #bbb;
+    padding: 22px;
+    text-align: center;
+    margin-top: 70px;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+}
+
+footer .footer-icons a {
+    margin: 0 10px;
+    color: #aaa;
+    font-size: 18px;
+    transition: all 0.2s;
+}
+
+footer .footer-icons a:hover {
+    color: white;
+    transform: translateY(-1px);
+}
+
+footer p {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+footer a {
+    color: #357ab8;
+}
