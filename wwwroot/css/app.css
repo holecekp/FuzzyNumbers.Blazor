@@ -8,6 +8,10 @@
 
 .validation-message {
     color: red;
+    margin-left: 140px;
+    font-size: small;
+    margin-bottom: 1em;
+    margin-top: -8px;
 }
 
 #blazor-error-ui {

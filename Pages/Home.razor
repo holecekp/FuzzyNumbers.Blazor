@@ -27,14 +27,14 @@
 
                 <div class="form-group">
                     <label for="fuzzyNumberA">Fuzzy number A</label>
-                    <InputFuzzyNumber id="fuzzyNumberA" @bind-Value="Model.FirstFuzzyNumber" />
+                    <InputFuzzyNumber id="fuzzyNumberA" @bind-Value="Model.FirstFuzzyNumber" DisplayName="Fuzzy number A" />
                 </div>
                 <ValidationMessage For="@(() => Model.FirstFuzzyNumber)" />
 
 
                 <div class="form-group">
                     <label for="fuzzyNumberB">Fuzzy number B</label>
-                    <InputFuzzyNumber id="fuzzyNumberB" @bind-Value="Model.SecondFuzzyNumber" />
+                    <InputFuzzyNumber id="fuzzyNumberB" @bind-Value="Model.SecondFuzzyNumber" DisplayName="Fuzzy number B" />
                 </div>
                 <ValidationMessage For="@(() => Model.SecondFuzzyNumber)" />
 
