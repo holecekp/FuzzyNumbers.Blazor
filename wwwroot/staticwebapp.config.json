@@ -1,0 +1,16 @@
+{
+  "routes": [
+    {
+      "route": "/service-worker.js",
+      "headers": {
+        "Cache-Control": "no-cache"
+      }
+    },
+    {
+      "route": "/service-worker-assets.js",
+      "headers": {
+        "Cache-Control": "no-cache"
+      }
+    }
+  ]
+}
