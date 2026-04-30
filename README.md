@@ -7,7 +7,7 @@ This sample isn't focused just on **calculations with fuzzy numbers** themselves
 # See it in action
 You can try the application live at: [fuzzymath.holecekp.eu](https://fuzzymath.holecekp.eu)
 
-<img width="400" alt="Screenshot of the site where this project is running" src="https://github.com/user-attachments/assets/66025605-3aad-4f3a-a8c5-e102f5b05f07" />
+<img width="400" alt="Screenshot of the site where this project is running" src="https://github.com/user-attachments/assets/ae44cd08-c622-4371-ab5d-bf61941da965" />
 
 # Parsing fuzzy numbers form text, or formatting them as a text
 The `Services` folder contains `FuzzyNumberParser` class that parses a fuzzy number from a string. The particular implementation expects a list of break points separated by a comma. The breakpoints uses a period
