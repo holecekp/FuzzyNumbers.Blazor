@@ -130,6 +130,15 @@ main {
     margin-bottom: 1em;
 }
 
+.card-right p.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+.card-right ul {
+  list-style-type: none;
+  margin-bottom: 1em;
+}
+
 .form-group {
     display: flex;
     align-items: center;

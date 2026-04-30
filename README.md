@@ -19,7 +19,7 @@ Examples of the user input:
 - 1, 2, 3 - a **triangular fuzzy number** (1, 2, 3)
 - 1, 2, 3, 4 - a **trapezoidal fuzzy number** (1, 2, 3, 4)
 - 1.4, 2.5, 3,6, 4.7 - a trapezoidal fuzzy number with decimal break points (1.4, 2.5, 3,6, 4.7)
-- 1, 2, 3, 4 - a **pentagonal fuzzy number**
+- 1, 2, 3, 4, 5 - a **pentagonal fuzzy number**
 - and so on... More break points can be used to for representing a more complex types of fuzzy numbers.
 
 The `Services` folder contains also `FuzzyNumberFormatter` class that takes care of the opposite task - formatting a fuzzy number as a text in the form of the break points list.

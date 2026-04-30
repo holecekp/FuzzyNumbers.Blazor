@@ -57,8 +57,21 @@
             <h3>How to use</h3>
 
             <p>
-                This page performs arithmetic operations on two fuzzy numbers using the open-source FuzzyMath library by Pavel Holeček.
-                For more information, see the links at the bottom of the page for the source code of this site and the FuzzyMath library.
+                Enter two fuzzy numbers in the form of comma-separated break points. Use a period as the decimal separator.
+                Examples:
+            </p>
+
+            <ul>
+                <li><code>1</code> - represents a real number</li>
+                <li><code>1, 2</code> - represents a closed interval [1, 2]</li>
+                <li><code>1, 2, 3</code> - a triangular fuzzy number</li>
+                <li><code>1, 2, 3, 4</code> - a trapezoidal fuzzy number</li>
+                <li><code>1.4, 2.5, 3.6, 4.7</code> - an example with decimal numbers</li>
+            </ul>                
+            
+            <p class="no-bottom-margin">
+                More break points can be used to for representing more complex types of fuzzy numbers, such as
+                five break points for a pentagonal fuzzy number.               
             </p>
 
         </div>
@@ -76,6 +89,10 @@
 
 
 <footer>
+    <p>
+        This page performs arithmetic operations on two fuzzy numbers using the open-source FuzzyMath library by Pavel Holeček.
+    </p>
+
     <p>
         The <a href="https://github.com/holecekp/FuzzyNumbers.Blazor">source code for this page</a> is available on GitHub.
         It demonstrates how to use the free, open-source <a href="https://github.com/holecekp/FuzzyMath">FuzzyMath library</a> by Pavel Holeček.
