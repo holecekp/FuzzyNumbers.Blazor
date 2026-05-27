@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Holecek.FuzzyMath" Version="1.0.0" />
+    <PackageReference Include="Holecek.FuzzyMath" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.12" PrivateAssets="all" />
   </ItemGroup>
