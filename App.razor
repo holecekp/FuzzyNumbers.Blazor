@@ -1,12 +1,6 @@
-﻿@using FuzzyNumbers.Blazor.Pages
-<Router AppAssembly="@typeof(App).Assembly">
+﻿<Router AppAssembly="@typeof(App).Assembly" NotFoundPage="typeof(Pages.NotFound)">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="input[type=text]" />
     </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <NotFound />
-        </LayoutView>
-    </NotFound>
 </Router>
