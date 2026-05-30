@@ -2,11 +2,12 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using FuzzyNumbers.Blazor.Interfaces;
-using Holecek.FuzzyMath.FuzzyNumbers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
+using Holecek.FuzzyMath.FuzzyNumbers;
+using Holecek.FuzzyMath.FuzzyNumbers.Formatting;
+using Holecek.FuzzyMath.FuzzyNumbers.Parsing;
 
 namespace FuzzyNumbers.Blazor.Controls;
 
@@ -15,10 +16,10 @@ public class InputFuzzyNumber : InputBase<FuzzyNumber>
    private string _parsingErrorMessage = default!;
     
     [Inject]
-    public IFuzzyNumberParser FuzzyNumberParser {get; set; }
+    public required IFuzzyNumberParser FuzzyNumberParser {get; set; }
 
     [Inject]
-    public IFuzzyNumberFormatter FuzzyNumberFormatter {get; set; }
+    public required IFuzzyNumberFormatter FuzzyNumberFormatter {get; set; }
 
     public string? CurrentText {get; private set;}
 
@@ -75,7 +76,7 @@ public class InputFuzzyNumber : InputBase<FuzzyNumber>
 
     protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out FuzzyNumber result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
-        if (FuzzyNumberParser.TryParse(value, out result))
+        if (FuzzyNumberParser.TryParse(value ?? string.Empty, out result))
         {
             Debug.Assert(result != null);
             validationErrorMessage = null;

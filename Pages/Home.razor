@@ -1,8 +1,9 @@
 ﻿@page "/"
-@using System.ComponentModel.DataAnnotations 
 @using Holecek.FuzzyMath.FuzzyNumbers
+@using Holecek.FuzzyMath.FuzzyNumbers.Drawing
+@using Holecek.FuzzyMath.FuzzyNumbers.Formatting
+@using Holecek.FuzzyMath.FuzzyNumbers.Parsing
 @using FuzzyNumbers.Blazor.Controls
-@using FuzzyNumbers.Blazor.Interfaces
 @using FuzzyNumbers.Blazor.Models
 
 <PageTitle>Arithmetic operations on fuzzy numbers</PageTitle>
@@ -109,7 +110,6 @@
     @inject IFuzzyNumberParser _fuzzyNumberParser
     @inject IFuzzyNumberFormatter _fuzzyNumberFormatter
     @inject IFuzzyNumberToGraphPointsConverter _fuzzyNumberToGraphPointsConverter
-
 
     [SupplyParameterFromForm]
     FuzzyArithmeticsFormModel Model { get; set;}= new();
