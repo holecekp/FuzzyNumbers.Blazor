@@ -10,7 +10,7 @@ You can try the application live at: [fuzzymath.holecekp.eu](https://fuzzymath.h
 <img width="400" alt="Screenshot of the site where this project is running" src="https://github.com/user-attachments/assets/ae44cd08-c622-4371-ab5d-bf61941da965" />
 
 # Parsing fuzzy numbers form text, or formatting them as a text
-The `Services` folder contains `FuzzyNumberParser` class that parses a fuzzy number from a string. The particular implementation expects a list of break points separated by a comma. The breakpoints uses a period
+The `FuzzyMath` library contains necessary classes for parsing and formatting fuzzy numbers. The `FuzzyNumberParser` class parses a fuzzy number from a string. The particular implementation expects a list of break points separated by a comma. The breakpoints uses a period
 as the decimal numbers separator. A valid fuzzy number has to have at least one break point and all the break points needs to be in an ascending order.
 
 Examples of the user input:
@@ -22,16 +22,15 @@ Examples of the user input:
 - 1, 2, 3, 4, 5 - a **pentagonal fuzzy number**
 - and so on... More break points can be used to for representing a more complex types of fuzzy numbers.
 
-The `Services` folder contains also `FuzzyNumberFormatter` class that takes care of the opposite task - formatting a fuzzy number as a text in the form of the break points list.
+The `FuzzyNumberFormatter` class from the `FuzzyMath` library takes care of the opposite task - formatting a fuzzy number as a text in the form of the break points list.
 
-Both classes implement `IFuzzyNumberParser` interface, and `IFuzzyNumberFormatter` interface respectivelly. The particular implementation of these interfaces is registered in DI in `Program.cs`:
+Both classes implement `IFuzzyNumberParser` interface, and `IFuzzyNumberFormatter` interface respectivelly. The particular implementation of these interfaces is registered in DI in `Program.cs` in this Blazor app:
 ```csharp
 builder.Services.AddSingleton<IFuzzyNumberFormatter, FuzzyNumberFormatter>();
 builder.Services.AddSingleton<IFuzzyNumberParser, FuzzyNumberParser>();
 ```
 
-This ensures that the same textual representation is used throughout the whole site. If you prefer a different textual representation of fuzzy numbers, just modify, or create your own implementation
-for these two interfaces and register them in this single point of the code.
+This ensures that the same textual representation is used throughout the whole site. If you prefer a different textual representation of fuzzy numbers, just modify, or create your own implementation for these two interfaces and register them in this single point of the code.
 
 # Blazor component for entering fuzzy numbers
 There is `InputFuzzyNumber` Blazor component in the `Controls` folder. It renders as a text box for entering a fuzzy number. It takes care of the parsing and validation of the user input.
@@ -42,7 +41,7 @@ The component uses `IFuzzyNumberParser` and `IFuzzyNumberFormatter` registered i
 # Presentation of the results in the form of a graph
 When the user click on a button, the result of the selected arithmetic operation is calculated, and both the inputs and the resulting fuzzy numbers are drawn in a graph.
 
-To achieve this, `FuzzyNumberToGraphPointsConverter` class in the `Services` folder converts a fuzzy number to a list of points that needs to be drawn. This can be then easily performed
+To achieve this, `FuzzyNumberToGraphPointsConverter` from the `FuzzyMath` library converts a fuzzy number to a list of points that needs to be drawn. This can be then easily performed
 by a graph drawing library of your choice. This site uses [Chart.js](https://www.chartjs.org/) JavaScript library. However, swapping to a different library should be an easy task.
 
 The methods for drawing itself can be found in `index.html`. The `drawGraph` JavaScript function initializes the graph and draw the fuzzy numbers in it. The `updateGraphData` JavaScript
